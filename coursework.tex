@@ -1,4 +1,10 @@
 \documentclass[a4paper,12pt,oneside]{article}
+\usepackage[left=30mm,right=15mm,top=20mm,bottom=20mm,includefoot]{geometry}
+\usepackage[small,compact,center]{titlesec}
+\renewcommand{\subsubsection}[1]{\addcontentsline{toc}{subsubsection}{\arabic{section}.\arabic{subsection}.\arabic{
+    subsubsection}.~#1}\stepcounter{subsubsection}\textbf{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}.~#1}}
+\usepackage{setspace}
+\onehalfspacing
 \usepackage[utf8]{inputenc}
 \usepackage[english,ukrainian]{babel}
 \usepackage{verbatim}
@@ -9,10 +15,6 @@
 \usepackage{cases}
 \usepackage{graphicx}
 \usepackage{cite}
-\addtolength{\oddsidemargin}{-.3in}
-\addtolength{\evensidemargin}{-.3in}
-\addtolength{\textwidth}{.6in}
-
 
 \title{Курсова робота\\Надлишкове кодування на еліптичних кривих}
 \author{Михайло Трояновський}
@@ -23,8 +25,11 @@
 \tableofcontents
 \pagebreak
 
+\section{Вступ}
+
+
 \section{Постановка задачі}
-Постановка
+Мета даної курсової роботи -- описати наявні способи надлишкового кодування з використанням еліптичних кривих, а також їхні переваги у порівнянні з іншими кодами.
 
 \section{Основні поняття}
 
@@ -34,7 +39,7 @@
 
 \clearpage
 \bibliography{coursework}{}
-\bibliographystyle{plain}
+\bibliographystyle{gost71u}
 
 
 \end{document}
