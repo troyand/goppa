@@ -1,8 +1,6 @@
 \documentclass[a4paper,12pt,oneside]{article}
 \usepackage[left=30mm,right=15mm,top=20mm,bottom=20mm,includefoot]{geometry}
 \usepackage[small,compact,center]{titlesec}
-\renewcommand{\subsubsection}[1]{\addcontentsline{toc}{subsubsection}{\arabic{section}.\arabic{subsection}.\arabic{
-    subsubsection}.~#1}\stepcounter{subsubsection}\textbf{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}.~#1}}
 \usepackage{setspace}
 \onehalfspacing
 \usepackage[utf8]{inputenc}
@@ -12,6 +10,8 @@
 \usepackage{fullpage}
 \usepackage{longtable}
 \usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{verbatim}
 \usepackage{cases}
 \usepackage{graphicx}
 \usepackage{cite}
@@ -82,7 +82,97 @@
 
 \section{Основні поняття}
 
+\subsection{Лінійні коди}
+Лінійний код --- векторний підпростір $C$ розмірності $k$ векторного простору $\mathbb{F}_q^n$ розмірності $n$, де $\mathbb{F}_q$ --- скінченне поле із $q$ елементів. 
+$d$ --- мінімальна відстань за Хемінгом між кодовими словами. Максимальна кількість помилок, які може виправити код: $r=\left \lfloor \frac{d-1}{2} \right \rfloor$. 
+Підсумовуючи ці основні характеристики, часто кажуть про лінійний код як про $(n, k, d)_q$-код.
+
+Нерівність Сінглтона: для $(n, k, d)$-коду виконується: $d \le n-k+1$, 
+коди для яких виконується рівність $d = n-k+1$ називають кодами із максимально досяжною мінімальною відстанню (maximum distance separable), вони є у певному сенсі найкращими.
+
+Нерівність Варшамова-Гілберта: якщо виконується співвідношення 
+$$\sum_{i=1}^{d-1} C_{n-1}^i (q-1)^i < q^{n-k}$$
+то існує лінійний $(n, k ,d)_q$-код.
+
+
+\subsection{Афінні та проективні криві}
+
+\subsection{Функціональні поля}
+
+\subsection{Дивізори}
+Дивізор алгебраїчної кривої $C$ --- це формальна сума її точок, взятих із певною кратністю:
+$$D = \sum_{P \in C} n_P P, n_P \in \mathbb{Z},$$
+де тільки скінченна кількість цілих чисел $n_P$ відмінна від нуля.
+
+Множина усіх дивізорів, позначена як $\mathbb{D}$, формує Абелеву групу із законом додавання:
+$$
+\sum_{P \in C} n_P P + \sum_{P \in C} m_P P = \sum_{P \in C} (n_P + m_P) P
+$$
+
+Ступінь $D$ --- це цілочисельна сума його коефіцієнтів:
+$$deg(D) = \sum_{P \in C} n_P$$
+$\forall D_1, D_2 \in \mathbb{D}: deg(D_1) + deg(D_2) = deg(D_1 + D_2)$, тому відображення $deg: \mathbb{D} \to \mathbb{Z}$ є гомоморфізмом.
+Множина $\mathbb{D}^0$ дивізорів ступеню 0 є підгрупою $D$, а також ядром гомоморфізму $deg$.
+
+Порядок $D$ у точці $P$ --- це цілий коефіцієнт при $P$: $ord_P(D) = n_P$.
+
 \section{Алгебро-геометричні коди}
+
+\subsection{Приклад кодів Гоппи}
+Нехай ми маємо криву $C$ над скінченним полем $\mathbb{F}$, скінченну множину точок $\mathcal{P} = \{P_1, \dots , P_n \}$ і дивізор $D$, відокремлений (disjoint) від $P_i$. 
+Код Гоппи $GC = GC(\mathcal{P}, D, C)$ визначають як
+$$GC = \{ (\phi(P_1), \dots , \phi(P_n)) | \phi \in L(D) \}$$
+Зазначений запис є функціональним кодом. Код лишків визначають як
+$$GC' = \{ c \in \mathbb{F}^n | c \cdot (\phi(P_1), \dots , \phi(P_n)) = 0, \forall \phi \in L(D) \}$$
+
+Для прикладу нехай $C$ --- квадрика Клейна над $\mathbb{F}_5$, $\mathcal{P} = (0:1:0) + (0:0:1) + (3:4:1)$ і $D = 2 * (4:2:1) + 3 * (3:2:1)$.
+Тоді $L(D)$ --- тривимірний простір із базисом
+$$\phi_1(x, y) = \frac{xy+4}{y^2+y+4}, \phi_2(x, y) = \frac{y+2}{y+3}, \phi_3(x, y) = \frac{1}{y+3}$$
+Тоді код Гоппи --- лінійний $(3, 2, 2)$-код над $\mathbb{F}_5$ із породжуючою матрицею
+$$
+\begin{pmatrix}
+ 1 & 0 & 2 \\
+ 0 & 1 & 4 
+\end{pmatrix}
+$$
+Програмний код, який реалізує описаний вище приклад у математичному середовищі Magma:
+\begin{verbatim}
+> A<x,y> := AffineSpace(FiniteField(5),2);
+> f:=x^3*y+y^3+x;
+> C:=Curve(A,f);
+> P1:=Places(C,1);
+> Div := DivisorGroup(C);
+> P1;
+[
+    Place at (0 : 1 : 0),
+    Place at (0 : 0 : 1),
+    Place at (1 : 0 : 0),
+    Place at (4 : 2 : 1),
+    Place at (3 : 2 : 1),
+    Place at (3 : 4 : 1)
+]
+> D:=P1[2]+P1[3];
+> P2:=[P1[1],P1[2],P1[6]];
+> D:=2*P1[4]+3*P1[5];
+> D0:=Div!D;
+> D0;
+Divisor on Curve over GF(5) defined by
+x^3*y + x + y^3
+> RiemannRochSpace(D0);
+KModule of dimension 3 over GF(5)
+Mapping from: KModule of dimension 3 over GF(5) to Algebraic function field
+defined over GF(5) by
+x^3*y + x + y^3
+> Basis(D0);
+[ ($.1*$.2 + 4)/($.2^2 + $.2 + 4), ($.2 + 2)/($.2 + 3), 1/($.2 + 3) ]
+> GC:=AlgebraicGeometricCode(P2,D0);
+> GC;
+[3, 2, 2] Linear Code over GF(5)
+Generator matrix:
+[1 0 2]
+[0 1 4]
+\end{verbatim}
+
 
 \nocite{*}
 
