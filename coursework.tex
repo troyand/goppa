@@ -1,7 +1,8 @@
 \documentclass[a4paper,12pt,oneside]{article}
-\usepackage[left=30mm,right=15mm,top=20mm,bottom=20mm,includefoot]{geometry}
+%\usepackage[left=20mm,right=15mm,top=20mm,bottom=20mm,includefoot]{geometry}
 \usepackage[small,compact,center]{titlesec}
 \usepackage{setspace}
+\usepackage[T1]{fontenc}
 \onehalfspacing
 \usepackage[utf8]{inputenc}
 \usepackage[english,ukrainian]{babel}
@@ -15,34 +16,36 @@
 \usepackage{cases}
 \usepackage{graphicx}
 \usepackage{cite}
+\usepackage[14pt]{extsizes}
 
-\title{Курсова робота\\Надлишкове кодування на еліптичних кривих}
+
+\title{Надлишкове кодування на алгебраїчних кривих}
 \author{Михайло Трояновський}
 
 \begin{document}
 
 \begin{titlepage}
 \begin{center}
+    Міністерство освіти і науки України\\
 Національний Університет\\ «Києво-Могилянська Академія»\\
-        Кафедра математики\\
+        Кафедра математики факультету інформатики\\
         \vskip 3cm
-        \includegraphics[width=100mm]{kma}\\
+%        \includegraphics[width=100mm]{kma}\\
                                \vskip 1cm
 {\Large
-    Курсова робота на тему:\\
-        «Надлишкове кодування на еліптичних кривих»
+        Надлишкове кодування на алгебраїчних кривих
 }
 \vskip 1cm
 \hskip 0.5\textwidth
 \begin{minipage}{0.5\textwidth}
-\textbf{Виконав:}\\
-        Михайло Михайлович Трояновський, студент ІСПР–1\\
-        \\
         \textbf{Науковий керівник:}\\
-        Юрій Вікторович Боднарчук
+        проф. Боднарчук Ю. В.\\
+\textbf{Виконав:}\\
+        Трояновський М. М.\\
+        \\
         \end{minipage}
         \vfill
-        Київ–2010
+        Київ 2011
         \end{center}
         \end{titlepage}
 
@@ -50,7 +53,8 @@
 \tableofcontents
 \pagebreak
 
-\section{Вступ}
+\section*{Вступ}
+\addcontentsline{toc}{section}{Вступ}
 Надлишкове кодування відіграє значну роль у боротьбі з помилками, які виникають при передачі даних через зашумлені телекомунікаційне середовище. 
 Загалом для надійної передачі інформації через ненадійні канали застосовують дві стратегії: виявлення та виправлення помилок. 
 У першому випадку до блоку даних додають контрольну інформацію, за допомогою якої одержувач має змогу зрозуміти, 
@@ -262,7 +266,8 @@ $$|N-(q+1)| \le g \lfloor 2 \sqrt{g} \rfloor$$
         $$\sum_{i \in I_y} f_j(P_i)z_i = s(v, f_j)$$
 \end{enumerate}
 
-\section{Висновки}
+\section*{Висновки}
+\addcontentsline{toc}{section}{Висновки}
 Попри специфічні властивості алгеброгеометричні коди поки массово не застовують в індустрії, 
 де знайшли використання коди Ріда-Соломона, які поступово витісняються LDPC-кодами. 
 Проте теорія, яка є підгрунтям для побудови алгеброгеометричних кодів досі активно розвивається, тому 
@@ -274,8 +279,9 @@ $$|N-(q+1)| \le g \lfloor 2 \sqrt{g} \rfloor$$
 \nocite{*}
 
 \clearpage
+\addcontentsline{toc}{section}{Список використаної літератури}
 \bibliography{coursework}{}
-\bibliographystyle{gost71u}
+\bibliographystyle{gost71u2003}
 
 
 \end{document}
