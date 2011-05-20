@@ -4,7 +4,7 @@ class HermitianCode():
         if not is_prime_power(m):
             raise Exception('m must be a prime power')
         self.m = m
-        self.g = m*(m-1)/2
+        self.g = int(m*(m-1)/2)
         field_size = m**2
         self.F = GF(field_size,'w')
         x, y, z = PolynomialRing(self.F, 3, 'xyz').gens()
@@ -12,24 +12,27 @@ class HermitianCode():
         f = x**(m+1) + y**m * z + y * z**m
         self.C = Curve(f)
         if a is None:
-            self.a = 2*self.g
+            self.a = m**3 - m**2 + m + 1
         else:
             self.a = a
         # t - number of errors that can be corrected with SV algorithm
-        self.t = (self.a-3*self.g+1)/2
+        self.t = int((self.a-3*self.g+1)/2)
         self.L_D = self.L(self.a)
         self.L_A = self.L(self.t + self.g)
         self.L_B = self.L(self.t + 3*self.g + 1)
         self.L_C = self.L(self.a - self.t - self.g)
         self.S = Matrix(self.L_A).transpose() * Matrix(self.L_C)
-        print self.S
+        #print self.S
         self.H()
         self.G()
         self.n = len(self.P)
         self.k = self.G().nrows()
+        self.d = self.a - 2*self.g + 2
+        #cache for applying function to the P set
+        self.f_point_cache = {}
 
     def __repr__(self):
-        return 'AG code on Hermitian curve H_%d <%s> with D=%d*Q' % (self.m, self.C, self.a)
+        return 'AG [%d, %d, %d] code on Hermitian curve H_%d <%s> with D=%d*Q' % (self.n, self.k, self.d, self.m, self.C, self.a)
 
     def L(self, a):
         '''L(a*Q)'''
@@ -44,7 +47,7 @@ class HermitianCode():
                 if i*m + j*(m+1) <= a:
                     #print 'x^%d y^%d / z^%d' % (i, j, i+j)
                     L_D_basis.append((x**i * y**j)/z**(i+j))
-        if len(L_D_basis) != a + 1 - self.g:
+        if len(L_D_basis) != int(a + 1 - self.g):
             raise Exception('''The number of functions found does not
             satisfy the Riemann-Roch theorem
             Found: %d, needed %d''' % (len(L_D_basis), a + 1 - self.g))
@@ -89,10 +92,12 @@ class HermitianCode():
 
     def multiply(self, v, f):
         '''vector-function multiplication'''
-        accumulator = 0
-        for p_i, v_i in zip(self.P, v):
-            accumulator += self._apply(f, p_i)*v_i
-        return accumulator
+        try:
+            f_vector = self.f_point_cache[f]
+        except KeyError:
+            f_vector = vector(self.C.base_ring(), [self._apply(f, p) for p in self.P])
+            self.f_point_cache[f] = f_vector
+        return v*f_vector
 
     def decode(self, v):
         new_rows = []
@@ -117,9 +122,9 @@ class HermitianCode():
             error_value_system.append(row)
         error_value_system = Matrix(self.C.base_ring(), error_value_system).echelon_form()
         #print error_value_system
-        print 'Error position and value:'
+        ##print 'Error position and value:'
         for i, pos in enumerate(error_positions):
-            print pos, error_value_system[i][-1]
+            ##print pos, error_value_system[i][-1]
             v[pos] -= error_value_system[i][-1]
         decode_g = Matrix(self.C.base_ring(), self.G().rows() + [v]).transpose().echelon_form()
         decoded_message = [decode_g[i][-1] for i in range(0, decode_g.ncols()-1)]
@@ -144,9 +149,10 @@ def test(AG):
         if message == decoded:
             print 'Decoded correctly'
         else:
-            print 'Failed to decode correctly'
+            raise Exception('Failed to decode correctly')
         #if raw_input() == 'q':
         #    break
+    print 'Cached %d results for applying function to P-set' % len(AG.f_point_cache)
 
 if __name__ == '__main__':
     test(HermitianCode(2, 6))
