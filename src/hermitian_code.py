@@ -1,3 +1,14 @@
+class SimpleL(Ring):
+    def __init__(self, i, j):
+        self.i = i
+        self.j = j
+
+    def __repr__(self):
+        return 'x^%d * y^%d' % (self.i, self.j)
+
+    def __mul__(self, other):
+        return SimpleL(self.i + other.i, self.j + other.j)
+
 class HermitianCode():
     def __init__(self, m, a=None):
         '''One-point AG code on Hermitian curve H_m with D=a*Q'''
