@@ -71,7 +71,7 @@ class HermitianCode():
             for f in self.L_D:
                 row = []
                 for point in self.P:
-                    row.append(f(point[0], point[1], point[2]))
+                    row.append(self._apply(f, point))
                 rows.append(row)
             # parity-check matrix
             self._H = Matrix(self.C.base_ring(), rows)
@@ -88,7 +88,7 @@ class HermitianCode():
         return vector(self.C.base_ring(), w) * self.G()
 
     def _apply(self, f, p):
-        return f(p[0], p[1], p[2])
+        return f(*list(p))
 
     def multiply(self, v, f):
         '''vector-function multiplication'''
