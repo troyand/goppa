@@ -61,26 +61,27 @@ class HermitianCode():
             Found: %d, needed %d''' % (len(L_D_basis), a + 1 - self.g))
         return L_D_basis
 
+    def _map_functions_points(self, functions, points):
+        return Matrix(self.F, [[self._apply(f, point) for point in points] for f in functions])
 
     def H(self):
         try:
             return self._H
-        except:
-            rows = []
-            for f in self.L_D:
-                row = []
-                for point in self.P:
-                    row.append(self._apply(f, point))
-                rows.append(row)
-            # parity-check matrix
-            self._H = Matrix(self.C.base_ring(), rows)
+        except AttributeError:
+            a_dual = len(self.P) - 2 + 2*self.g - self.a
+            if a_dual < self.a and a_dual > 2*self.g - 2:
+                print 'using dual'
+                self._G = self._map_functions_points(self.L(a_dual), self.P)
+                self._H = Matrix(self.F, self._G.transpose().kernel().basis())
+            else:
+                self._H = self._map_functions_points(self.L_D, self.P)
             return self._H
 
     def G(self):
         try:
             return self._G
-        except:
-            self._G = Matrix(self.C.base_ring(), self.H().transpose().kernel().basis())
+        except AttributeError:
+            self._G = Matrix(self.F, self.H().transpose().kernel().basis())
             return self._G
 
     def encode(self, w):
@@ -163,17 +164,19 @@ class TestHermitianCode(unittest.TestCase):
     def test_2_6_H_G(self):
         AG = self.ag_2_6
         w = list(AG.F)[1]
-        self.assertEqual(AG.G(), Matrix([
+        self.assertEqual(AG.G().echelon_form(), Matrix([
             (1, 1, 0, 0, w + 1, w + 1, w, w),
-            (0, 0, 1, 1, w, w, w + 1, w + 1)])
+            (0, 0, 1, 1, w, w, w + 1, w + 1)]
+            ).echelon_form()
             )
-        self.assertEqual(AG.H(), Matrix([
+        self.assertEqual(AG.H().echelon_form(), Matrix([
             (1, 1, 1, 1, 1, 1, 1, 1),
             (0, 1, w, w + 1, w, w + 1, w, w + 1),
             (0, 1, w + 1, w, w + 1, w, w + 1, w),
             (0, 0, 1, 1, w, w, w + 1, w + 1),
             (0, 0, w, w + 1, w + 1, 1, 1, w),
-            (0, 0, 1, 1, w + 1, w + 1, w, w)])
+            (0, 0, 1, 1, w + 1, w + 1, w, w)]
+            ).echelon_form()
             )
 
     def decoding_helper(self, AG):
