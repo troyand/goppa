@@ -25,6 +25,12 @@ class HermitianCode():
         self.L_C = self.L(self.a - self.t - self.g)
         self.S = Matrix(self.L_A).transpose() * Matrix(self.L_C)
         #print self.S
+
+        # init points: P set and Q
+        points = self.C.rational_points()
+        self.Q = points[1]
+        self.P = [points[0]] + points[2:]
+
         self.H()
         self.G()
         self.n = len(self.P)
@@ -55,20 +61,11 @@ class HermitianCode():
             Found: %d, needed %d''' % (len(L_D_basis), a + 1 - self.g))
         return L_D_basis
 
-    def rational_points(self):
-        try:
-            return self._points
-        except:
-            self._points = self.C.rational_points()
-            return self._points
 
     def H(self):
         try:
             return self._H
         except:
-            points = self.rational_points()
-            self.Q = points[1]
-            self.P = [points[0]] + points[2:]
             rows = []
             for f in self.L_D:
                 row = []
