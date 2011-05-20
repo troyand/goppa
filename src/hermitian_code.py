@@ -1,3 +1,5 @@
+import unittest
+
 class HermitianCode():
     def __init__(self, m, a=None):
         '''One-point AG code on Hermitian curve H_m with D=a*Q'''
@@ -132,6 +134,8 @@ class HermitianCode():
 
 def test(AG):
     print AG
+    print AG.H()
+    print '===='
     print AG.G()
     print 'We may add up to %d errors for SV algorithm' % AG.t
     for j in range(0, 10):
@@ -154,7 +158,46 @@ def test(AG):
         #    break
     print 'Cached %d results for applying function to P-set' % len(AG.f_point_cache)
 
+class TestHermitianCode(unittest.TestCase):
+    def setUp(self):
+        self.ag_2_6 = HermitianCode(2, 6)
+        self.ag_4_40 = HermitianCode(4, 40)
+
+    def test_2_6_H_G(self):
+        AG = self.ag_2_6
+        w = list(AG.F)[1]
+        self.assertEqual(AG.G(), Matrix([
+            (1, 1, 0, 0, w + 1, w + 1, w, w),
+            (0, 0, 1, 1, w, w, w + 1, w + 1)])
+            )
+        self.assertEqual(AG.H(), Matrix([
+            (1, 1, 1, 1, 1, 1, 1, 1),
+            (0, 1, w, w + 1, w, w + 1, w, w + 1),
+            (0, 1, w + 1, w, w + 1, w, w + 1, w),
+            (0, 0, 1, 1, w, w, w + 1, w + 1),
+            (0, 0, w, w + 1, w + 1, 1, 1, w),
+            (0, 0, 1, 1, w + 1, w + 1, w, w)])
+            )
+
+    def decoding_helper(self, AG):
+        w = list(AG.F)[1]
+        for j in range(0, 10):
+            message = [w**(i+j) for i in range(0, AG.k)]
+            v=AG.encode(message)
+            for i in range(0, AG.t):
+                v[i*2] += w**(i+j)
+            decoded = AG.decode(v)
+            self.assertEqual(message, decoded)
+
+    def test_2_6_decoding(self):
+        self.decoding_helper(self.ag_2_6)
+
+    def test_4_40_decoding(self):
+        self.decoding_helper(self.ag_4_40)
+
 if __name__ == '__main__':
-    test(HermitianCode(2, 6))
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestHermitianCode)
+    unittest.TextTestRunner(verbosity=2).run(suite)
+    #test(HermitianCode(2, 6))
     #test(HermitianCode(4, 40))
 
