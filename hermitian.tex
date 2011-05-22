@@ -1,0 +1,65 @@
+\documentclass[a4paper,12pt,oneside]{article}
+%\usepackage[left=20mm,right=15mm,top=20mm,bottom=20mm,includefoot]{geometry}
+\usepackage[small,compact,center]{titlesec}
+\usepackage{setspace}
+\usepackage[T1]{fontenc}
+\onehalfspacing
+\usepackage[utf8]{inputenc}
+\usepackage[english,ukrainian]{babel}
+\usepackage{verbatim}
+\usepackage{indentfirst}
+\usepackage{fullpage}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{cases}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage[14pt]{extsizes}
+
+\title{Надлишкове кодування на алгебраїчних кривих}
+\author{Михайло Трояновський}
+
+\begin{document}
+
+\section{Preliminaries}
+Нехай $m$ --- степінь простого числа. Тоді над полем $\mathbb{F}_{m^2}$ крива, яка визначається рівнянням $H_m = x^{m+1} + y^m z + y z^m$ ,
+називається ермітовою кривою. Ця крива має $m^3+1$ $\mathbb{F}_{m^2}$-раціональних точок, серед них є одна нескінченно віддалена, 
+$Q = (0:1:0)$. Рід цієї кривої можна обчислити як $g = \frac{m(m-1)}{2}$.
+
+Нерівність Серра дає оцінку максимальної кількості точок $N$ на кривій роду $g$ над полем $\mathbb{F}_q$:
+$$ N \le q+1+g \lfloor 2 \sqrt{q} \rfloor $$
+Підставивши параметри ермітової кривої у цю нерівність, отримаємо:
+$$ N \le m^2 + 1 + \frac{m(m-1)}{2} \lfloor 2 \sqrt{m^2} \rfloor= m^2 + 1 + m(m-1)m = $$
+$$ = m^2 + 1 + m^3 - m^2 = m^3 + 1$$
+Звідси зрозуміло, що ермітова крива є максимальною.
+
+Для ермітової кривої базис простору $L(aQ)$ має особливий вигляд та може бути досить тривіально обчислений:
+$$ L(aQ) = span \left \{ \frac{x^i y^j}{z^{i+j}}, i m + j (m + 1) \le a, i \le m \right \} $$
+
+
+\section{Алгоритм}
+Нехай $\mathcal{P}$ --- множина усіх $\mathbb{F}_{m^2}$-раціональних точок $H_m$, окрім $Q$, тоді алгеброгеометричний код 
+$C = (H_m, \mathcal{P}, aQ)_\Omega$ називатимемо ермітовим кодом з параметрами $(m, a)$.
+\subsection{Кодування}
+\subsubsection{Попередня підготовка}
+Обчислимо перевірочну матрицю $H$
+$$ 
+H = 
+\begin{pmatrix}
+ f_1 (P_1) & \cdots & f_1(P_{m^3}) \\
+ \vdots & \ddots & \vdots \\
+ f_i (P_1) & \cdots & f_i(P_{m^3})
+\end{pmatrix}
+$$
+\subsubsection{Кодування вхідного слова}
+\subsection{Декодування}
+\subsubsection{Попередня підготовка}
+\subsubsection{Декодування вхідного слова}
+
+
+\section{Аналіз складності}
+\section{Приклад}
+
+\end{document}
