@@ -114,7 +114,7 @@ class HermitianCode():
             if self._apply(theta, p) == 0:
                 error_positions.append(i)
         error_value_system = []
-        for f in self.L_B:
+        for f in self.L_D:
             row = []
             for i in error_positions:
                 row.append(self._apply(f, self.P[i]))
