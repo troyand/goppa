@@ -8,6 +8,17 @@ class SimpleL(Ring):
 
     def __mul__(self, other):
         return SimpleL(self.i + other.i, self.j + other.j)
+    
+    def __call__(self, x, y, z):
+        if self.i == 0:
+            x_part = x.base_ring().one()
+        else:
+            x_part = x**self.i
+        if self.j == 0:
+            y_part = y.base_ring().one()
+        else:
+            y_part = y**self.j
+        return x_part * y_part
 
 class HermitianCode():
     def __init__(self, m, a=None):
@@ -22,6 +33,7 @@ class HermitianCode():
         self.x, self.y, self.z = x, y, z
         f = x**(m+1) + y**m * z + y * z**m
         self.C = Curve(f)
+        print 'Constructed curve'
         if a is None:
             self.a = m**3 - m**2 + m + 1
         else:
@@ -32,7 +44,7 @@ class HermitianCode():
         self.L_A = self.L(self.t + self.g)
         self.L_B = self.L(self.t + 3*self.g + 1)
         self.L_C = self.L(self.a - self.t - self.g)
-        self.S = Matrix(self.L_A).transpose() * Matrix(self.L_C)
+        self.S = [[g*h for h in self.L_C] for g in self.L_A]# Matrix(self.L_A).transpose() * Matrix(self.L_C)
         #print self.S
         self.H()
         self.G()
@@ -52,12 +64,11 @@ class HermitianCode():
                 %d <= 2*%d - 2''' % (a, self.g))
         L_D_basis = []
         m = self.m
-        x, y, z = self.x, self.y, self.z
         for i in range(0, m + 1):
             for j in range(0, a/(m+1) + 1):
                 if i*m + j*(m+1) <= a:
                     #print 'x^%d y^%d / z^%d' % (i, j, i+j)
-                    L_D_basis.append((x**i * y**j)/z**(i+j))
+                    L_D_basis.append(SimpleL(i, j))
         if len(L_D_basis) != int(a + 1 - self.g):
             raise Exception('''The number of functions found does not
             satisfy the Riemann-Roch theorem
@@ -69,6 +80,7 @@ class HermitianCode():
             return self._points
         except:
             self._points = self.C.rational_points()
+            print 'Found rational points'
             return self._points
 
     def H(self):
@@ -79,7 +91,8 @@ class HermitianCode():
             self.Q = points[1]
             self.P = [points[0]] + points[2:]
             rows = []
-            for f in self.L_D:
+            for i, f in enumerate(self.L_D):
+                print 100*i/len(self.L_D)
                 row = []
                 for point in self.P:
                     row.append(self._apply(f, point))
@@ -119,7 +132,7 @@ class HermitianCode():
             new_rows.append(new_row)
         S = Matrix(self.C.base_ring(), new_rows)
         #print S
-        theta = vector(self.L_A)*vector(S.kernel().basis()[0])
+        theta = vector([self.x**f.i * self.y**f.j / self.z**(f.i + f.j) for f in self.L_A])*vector(S.kernel().basis()[0])
         error_positions = []
         for i, p in enumerate(self.P):
             if self._apply(theta, p) == 0:
