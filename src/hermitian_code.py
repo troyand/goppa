@@ -1,5 +1,8 @@
 import unittest
 
+class DecodingError(Exception):
+    pass
+
 class HermitianCode():
     def __init__(self, m, a=None):
         '''One-point AG code on Hermitian curve H_m with D=a*Q'''
@@ -108,7 +111,10 @@ class HermitianCode():
             new_rows.append(new_row)
         S = Matrix(self.C.base_ring(), new_rows)
         #print S
-        theta = vector(self.L_A)*vector(S.kernel().basis()[0])
+        try:
+            theta = vector(self.L_A)*vector(S.kernel().basis()[0])
+        except IndexError:
+            raise DecodingError
         error_positions = []
         for i, p in enumerate(self.P):
             if self._apply(theta, p) == 0:
