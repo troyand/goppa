@@ -3,7 +3,7 @@ import logging
 
 logger = logging.getLogger('hermitian_code')
 logger.setLevel(logging.CRITICAL)
-while len(logger.parent.handlers) != 1:
+while len(logger.parent.handlers) > 1:
     logger.parent.removeHandler(logger.parent.handlers[-1])
 
 

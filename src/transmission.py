@@ -88,7 +88,7 @@ def client(HC, PORT=50007):
                         )))
                     sys.stdout.flush()
             except DecodingError:
-                for i in range(HC.k):
+                for i in range(HC.k*HC.F.vector_space().dimension()/8):
                     sys.stdout.write('_')
                 sys.stdout.flush()
     print
