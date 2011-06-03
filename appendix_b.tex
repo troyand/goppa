@@ -1,0 +1,31 @@
+\documentclass[a4paper,12pt,oneside]{article}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage[utf8]{inputenc}
+\usepackage[english,ukrainian]{babel}
+\usepackage[14pt]{extsizes}
+\usepackage{simplemargins}
+\setallmargins{22mm}
+\lstset {                 % A rudimentary config that shows off some features.
+    language=Python,
+basicstyle=\small\sffamily,
+numbers=left,
+numberstyle=\tiny,
+frame=tb,
+columns=fullflexible,
+showstringspaces=false
+}
+
+
+\begin{document}
+\begin{center}
+\textbf{Додаток Б}
+
+(обов'язковий)
+
+Текст програми transmission.py
+\end{center}
+\lstinputlisting{src/transmission.py}
+\end{document}

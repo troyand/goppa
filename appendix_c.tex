@@ -1,0 +1,414 @@
+%% Created by Maple 13.00 (IBM INTEL LINUX)
+%% Source Worksheet: example.mws
+%% Generated: Fri Jun  3 06:30:13 2011
+\documentclass[a4paper,12pt,oneside]{article}
+\usepackage[T1]{fontenc}
+\usepackage{setspace}
+\onehalfspacing
+\usepackage[utf8]{inputenc}
+\usepackage[english,ukrainian]{babel}
+\usepackage[14pt]{extsizes}
+\usepackage{simplemargins}
+\setallmargins{22mm}
+
+\usepackage{maple2e}
+ \def\emptyline{\vspace{12pt}}
+\DefineParaStyle{Error}
+\DefineParaStyle{Maple Output}
+\DefineParaStyle{Warning}
+\DefineCharStyle{2D Math}
+\DefineCharStyle{2D Output}
+\begin{document}
+\begin{center}
+\textbf{Додаток В}
+
+(обов'язковий)
+
+Вивід сесії Maple
+\end{center}
+
+\pagestyle{empty}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{with(casa):}{%
+}
+\end{mapleinput}
+
+\mapleresult
+\begin{maplettyout}
+`           |__| `
+\end{maplettyout}
+
+\begin{maplettyout}
+`           |  |          Welcome to CASA 2.5 for Maple V.5`
+\end{maplettyout}
+
+\begin{maplettyout}
+`     |   /\\|  |/\\ `
+\end{maplettyout}
+
+\begin{maplettyout}
+`    /=\\__|  []  | `
+\end{maplettyout}
+
+\begin{maplettyout}
+`   /            \\_       Copyright (C) 1990-2000 by Research
+Institute `
+\end{maplettyout}
+
+\begin{maplettyout}
+`   |              \\      for Symbolic Computation (RISC-Linz), the`
+\end{maplettyout}
+
+\begin{maplettyout}
+`   \\   CASA 2.5   |      University of Linz, A-4040 Linz, Austria.`
+\end{maplettyout}
+
+\begin{maplettyout}
+`    |             |`
+\end{maplettyout}
+
+\begin{maplettyout}
+`   _|     |||     |      For help type '?casa' or '?casa,<topic>'.`
+\end{maplettyout}
+
+\begin{maplettyout}
+`__/       |||     |_ `
+\end{maplettyout}
+
+\begin{maplettyout}
+Error, (in with) symbol or symbol::type expected in local list
+\end{maplettyout}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{infolevel[`casa/finite`] := 19:}{%
+}
+\end{mapleinput}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{C1 := finiteCurve(x^3 + y^2 + y, finiteField(4));}{%
+}
+\end{mapleinput}
+
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{C1 := x^3+y*z^2+y^2*z;}{%
+\[
+\mathit{C1} := x^{3} + y\,z^{2} + y^{2}\,z
+\]
+%
+}
+\end{maplelatex}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{H1 := GoppaPrimary(C1, "affine", 6):}{%
+}
+\end{mapleinput}
+
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{G = `+6 (0:1:0) `;}{%
+\[
+G=\mathit{+6\ (0:1:0)\ }
+\]
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{`D ` = [0, 0, 1]*``+[0, 1, 1]*``+[1, alpha, 1]*``+[1, alpha^2,
+1]*``+[alpha, alpha, 1]*``+[alpha, alpha^2, 1]*``+[alpha^2, alpha,
+1]*``+[alpha^2, alpha^2, 1]*``;}{%
+\maplemultiline{
+\mathit{D\ }=[0, \,0, \,1]\,\  + [0, \,1, \,1]\,\  + [1, \,\alpha
+ , \,1]\,\  + [1, \,\alpha ^{2}, \,1]\,\  + [\alpha , \,\alpha , 
+\,1]\,\  + [\alpha , \,\alpha ^{2}, \,1]\,\  \\
+\mbox{} + [\alpha ^{2}, \,\alpha , \,1]\,\  + [\alpha ^{2}, \,
+\alpha ^{2}, \,1]\,\  }
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{`L(G)` = span(1,y/z,y^2/z^2,x/z,x*y/z^2,x^2/z^2);}{%
+\[
+\mathit{L(G)}=\mathrm{span}(1, \,{\displaystyle \frac {y}{z}} , 
+\,{\displaystyle \frac {y^{2}}{z^{2}}} , \,{\displaystyle \frac {
+x}{z}} , \,{\displaystyle \frac {x\,y}{z^{2}}} , \,
+{\displaystyle \frac {x^{2}}{z^{2}}} )
+\]
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{H = matrix([[1, 1, 1, 1, 1, 1, 1, 1], [0, 1, alpha, alpha^2, alpha,
+alpha^2, alpha, alpha^2], [0, 1, alpha^2, alpha, alpha^2, alpha,
+alpha^2, alpha], [0, 0, 1, 1, alpha, alpha, alpha^2, alpha^2], [0, 0,
+alpha, alpha^2, alpha^2, 1, 1, alpha], [0, 0, 1, 1, alpha^2, alpha^2,
+alpha, alpha]]);}{%
+\[
+H= \left[ 
+{\begin{array}{rrcccccc}
+1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+0 & 1 & \alpha  & \alpha ^{2} & \alpha  & \alpha ^{2} & \alpha 
+ & \alpha ^{2} \\
+0 & 1 & \alpha ^{2} & \alpha  & \alpha ^{2} & \alpha  & \alpha ^{
+2} & \alpha  \\
+0 & 0 & 1 & 1 & \alpha  & \alpha  & \alpha ^{2} & \alpha ^{2} \\
+0 & 0 & \alpha  & \alpha ^{2} & \alpha ^{2} & 1 & 1 & \alpha  \\
+0 & 0 & 1 & 1 & \alpha ^{2} & \alpha ^{2} & \alpha  & \alpha 
+\end{array}}
+ \right] 
+\]
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{G = matrix([[1, 1, 0, 0, alpha^2, alpha^2, alpha, alpha], [0, 0, 1,
+1, alpha, alpha, alpha^2, alpha^2]]);}{%
+\[
+G= \left[ 
+{\begin{array}{rrrrcccc}
+1 & 1 & 0 & 0 & \alpha ^{2} & \alpha ^{2} & \alpha  & \alpha  \\
+0 & 0 & 1 & 1 & \alpha  & \alpha  & \alpha ^{2} & \alpha ^{2}
+\end{array}}
+ \right] 
+\]
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{[n, k, d[Gamma]] = 8, 2, 6;}{%
+\[
+[n, \,k, \,{d_{\Gamma }}]=8, \,2, \,6
+\]
+%
+}
+\end{maplelatex}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{c :=GoppaEncode([0, 1], H1);}{%
+}
+\end{mapleinput}
+
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{c := vector([0, 0, 1, 1, alpha, alpha, alpha^2, alpha^2]);}{%
+\[
+c :=  \left[  \! 0, \,0, \,1, \,1, \,\alpha , \,\alpha , \,\alpha
+ ^{2}, \,\alpha ^{2} \!  \right] 
+\]
+%
+}
+\end{maplelatex}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{c[2] := 1; c[8]:= 0;}{%
+}
+\end{mapleinput}
+
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{c[2] := 1;}{%
+\[
+{c_{2}} := 1
+\]
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{c[8] := 0;}{%
+\[
+{c_{8}} := 0
+\]
+%
+}
+\end{maplelatex}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{SV := GoppaPrepareSV(H1):}{%
+}
+\end{mapleinput}
+
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{A = `+3 (0:1:0) `;}{%
+\[
+A=\mathit{+3\ (0:1:0)\ }
+\]
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{C = `+3 (0:1:0) `;}{%
+\[
+C=\mathit{+3\ (0:1:0)\ }
+\]
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{psi = [1, y/z, x/z];}{%
+\[
+\psi =[1, \,{\displaystyle \frac {y}{z}} , \,{\displaystyle 
+\frac {x}{z}} ]
+\]
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{chi = [1, y/z, x/z];}{%
+\[
+\chi =[1, \,{\displaystyle \frac {y}{z}} , \,{\displaystyle 
+\frac {x}{z}} ]
+\]
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{psi*`*`*chi = matrix([[1, y/z, x/z], [y/z, y^2/z^2, x*y/z^2], [x/z,
+x*y/z^2, x^2/z^2]]);}{%
+\[
+\psi \,*\,\chi = \left[ 
+{\begin{array}{ccc}
+1 & {\displaystyle \frac {y}{z}}  & {\displaystyle \frac {x}{z}} 
+ \\ [2ex]
+{\displaystyle \frac {y}{z}}  & {\displaystyle \frac {y^{2}}{z^{2
+}}}  & {\displaystyle \frac {x\,y}{z^{2}}}  \\ [2ex]
+{\displaystyle \frac {x}{z}}  & {\displaystyle \frac {x\,y}{z^{2}
+}}  & {\displaystyle \frac {x^{2}}{z^{2}}} 
+\end{array}}
+ \right] 
+\]
+%
+}
+\end{maplelatex}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\mapleinline{active}{1d}{GoppaDecode(c, H1, SV);}{%
+}
+\end{mapleinput}
+
+\mapleresult
+\begin{maplelatex}
+\mapleinline{inert}{2d}{S = matrix([[alpha, alpha^2, alpha], [alpha^2, 0, 1], [alpha, 1,
+1]]);}{%
+\[
+S= \left[ 
+{\begin{array}{ccc}
+\alpha  & \alpha ^{2} & \alpha  \\
+\alpha ^{2} & 0 & 1 \\
+\alpha  & 1 & 1
+\end{array}}
+ \right] 
+\]
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{`Nullspace(S)` = (vector([alpha, alpha, 1]));}{%
+\[
+\mathit{Nullspace(S)}=([\alpha , \,\alpha , \,1])
+\]
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{`error locations` = \{2, 3, 8\};}{%
+\[
+\mathit{error\ locations}=\{2, \,3, \,8\}
+\]
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{`Error Value System: `*matrix([[1, 1, 1], [1, alpha, alpha^2], [1,
+alpha^2, alpha], [0, 1, alpha^2], [0, alpha, alpha], [0, 1,
+alpha]])*`* e` = matrix([[alpha], [alpha^2], [0], [alpha], [1],
+[1]]);}{%
+\[
+\mathit{Error\ Value\ System:\ }\, \left[ 
+{\begin{array}{rcc}
+1 & 1 & 1 \\
+1 & \alpha  & \alpha ^{2} \\
+1 & \alpha ^{2} & \alpha  \\
+0 & 1 & \alpha ^{2} \\
+0 & \alpha  & \alpha  \\
+0 & 1 & \alpha 
+\end{array}}
+ \right] \,\mathit{*\ e}= \left[ 
+{\begin{array}{c}
+\alpha  \\
+\alpha ^{2} \\
+0 \\
+\alpha  \\
+1 \\
+1
+\end{array}}
+ \right] 
+\]
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{e = vector([1, 0, alpha^2]);}{%
+\[
+e= \left[  \! 1, \,0, \,\alpha ^{2} \!  \right] 
+\]
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{c = vector([0, 0, 1, 1, alpha, alpha, alpha^2, alpha^2]);}{%
+\[
+c= \left[  \! 0, \,0, \,1, \,1, \,\alpha , \,\alpha , \,\alpha ^{
+2}, \,\alpha ^{2} \!  \right] 
+\]
+%
+}
+\end{maplelatex}
+
+\begin{maplelatex}
+\mapleinline{inert}{2d}{vector([0, 1]);}{%
+\[
+[0, \,1]
+\]
+%
+}
+\end{maplelatex}
+
+\end{maplegroup}
+\begin{maplegroup}
+\begin{mapleinput}
+\end{mapleinput}
+
+\end{maplegroup}
+\end{document}
+%% End of Maple 13.00 Output
